@@ -334,6 +334,7 @@ End Sub
 
 Private Sub pTABLA_ELIMINADA_EN_BD_LOCAL_ACTUAL()
 QueryLocal = QueryLocal & "DROP TABLE " & NombreTabla & ";" & vbCrLf
+pAGREGA_SENTENCIA_SQL NombreTabla, QueryLocal, New Collection
 End Sub
 
 
