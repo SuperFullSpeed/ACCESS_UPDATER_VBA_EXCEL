@@ -142,7 +142,7 @@ Dim NombreTablaOriginaria As String, NombreCampoOriginaria As String
 Dim NombreTablaForanea As String, NombreCampoForaneo As String
 Dim ReglaOnUpdate As String, ReglaOnDelete As String, NombreRestriccion As String
 'Variables de otros tipos
-Dim rsIndices As Object
+Dim rsIndices As Object, objCampoForaneo As Variant
 
 'RECONECTA BASE DE DATOS LOCAL
 fRECONECTA_BD
@@ -163,13 +163,16 @@ While Not rsIndices.EOF
     
     'IGNORA LAS TABLAS DEL SISTEMA (COMIENZAN CON "MSys")
     If left(NombreTablaOriginaria, 4) <> "MSys" Then
+        'OBJETO CAMPO FORANEO
+        Set objCampoForaneo = TABLAS(NombreTablaForanea)("CAMPOS")(NombreCampoForaneo)
+    
         'REGISTRAR EL NOMBRE DEL CAMPO
-        TABLAS(NombreTablaForanea)("CAMPOS")(NombreCampoForaneo)("LLAVE FORANEA") = True
-        TABLAS(NombreTablaForanea)("CAMPOS")(NombreCampoForaneo)("TABLA ORIGINARIA LLAVE FORANEA") = NombreTablaOriginaria
-        TABLAS(NombreTablaForanea)("CAMPOS")(NombreCampoForaneo)("CAMPO ORIGINARIO LLAVE FORANEA") = NombreCampoOriginaria
-        TABLAS(NombreTablaForanea)("CAMPOS")(NombreCampoForaneo)("REGLA ON UPDATE") = ReglaOnUpdate
-        TABLAS(NombreTablaForanea)("CAMPOS")(NombreCampoForaneo)("REGLA ON DELETE") = ReglaOnDelete
-        TABLAS(NombreTablaForanea)("CAMPOS")(NombreCampoForaneo)("NOMBRE RESTRICCION LLAVE FORANEA") = NombreRestriccion
+        objCampoForaneo("LLAVE FORANEA") = True
+        objCampoForaneo("TABLA ORIGINARIA LLAVE FORANEA") = NombreTablaOriginaria
+        objCampoForaneo("CAMPO ORIGINARIO LLAVE FORANEA") = NombreCampoOriginaria
+        objCampoForaneo("REGLA ON UPDATE") = ReglaOnUpdate
+        objCampoForaneo("REGLA ON DELETE") = ReglaOnDelete
+        objCampoForaneo("NOMBRE RESTRICCION LLAVE FORANEA") = NombreRestriccion
     End If
     
     rsIndices.MoveNext
