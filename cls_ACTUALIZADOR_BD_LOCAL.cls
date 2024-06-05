@@ -307,14 +307,7 @@ Dim SentenciaSQL As Variant
 
 For x = 1 To SentenciasSQL.Count
     For Each SentenciaSQL In SentenciasSQL(x)("SENTENCIA SQL")
-        On Error Resume Next
         EJECUTA_QUERY_LOCAL CStr(SentenciaSQL), CnBD
-        If err.Number <> 0 Then
-            void = err.Description
-            Clipboard CStr(SentenciaSQL)
-            Stop
-        End If
-        On Error GoTo 0
     Next SentenciaSQL
 Next x
 End Sub
